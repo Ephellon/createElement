@@ -2,7 +2,7 @@
 
 Polyfill built-in createElement to act like React.createElement
 
-# Document.createElement
+## Document.createElement
 
 Normally just takes one parameter. The tag name. 
 
@@ -35,7 +35,7 @@ and you can write something like:
   );
   onload = () => document.body.appendChild(el);
 ```
-# content attributes, IDL attributes and event listeners
+## content attributes, IDL attributes and event listeners
 
 In the wild, the relationship between content attributes and IDL attributes depends on 
 which attribute you are talking about, and when in the lifecycle of a node you are
@@ -81,5 +81,4 @@ The code is pretty lightweight so I'll just include it here for references:
 ## spec
 
 Incidentally there has been discussion of implementing something like this in the [Web Spec](https://discourse.wicg.io/t/passing-an-object-of-attributes-to-document-createelement-as-the-second-argument/809)
-
 
