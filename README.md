@@ -1,10 +1,10 @@
 # createElement
 
-Polyfill built-in createElement to act like React.createElement
+Polyfill built-in createElement to act like an O.P. React.createElement
 
 ## Document.createElement
 
-Normally just takes one parameter. The tag name. 
+Normally just takes one parameter, the tag name.
 
 In [React](https://reactjs.org/docs/react-api.html#createelement) you might write:
 
@@ -23,18 +23,19 @@ Including this script
 and you can write something like:
 
 ```JavaScript
-  const el = document.createElement('div', 
+  let el = document.createElement('div#id', 
     {
       alpha: 12312122,
       beta: 'sdfasfd',
       gamma: {}
     },
-    document.createElement('span', { style: 'font-variant: italic;' }, 'hi'),
+    document.createElement('span.class', { style: 'font-variant: italic;' }, 'hi'),
     ' wow ',
-    document.createElement('button', {onclick: () => alert(1)}, 'say')
+    document.createElement('button[onhover=console.log("hovering...")]', { onclick: () => alert(1) }, 'say')
   );
   onload = () => document.body.appendChild(el);
 ```
+
 ## content attributes, IDL attributes and event listeners
 
 In the wild, the relationship between content attributes and IDL attributes depends on 
@@ -43,40 +44,7 @@ interacting with it.
 
 As an approximation of the complexity, I've chosen to just turn any attribute
 starting with 'on' into an IDL and set it directly on the node, instead of using setAttribute,
-under the assumption that it's an event listener. Everything else uses setAttribute.
-
-## the code
-
-The code is pretty lightweight so I'll just include it here for references:
-
-```JavaScript
- const nativeCreate = document.createElement.bind(document);
-  document.createElement = createElement;
-
-  // just for the lulz
-  document.createElement[Symbol.toPrimitive] = () => "function createElement() { [native code] }";
-
-  function createElement(name, attributes, ...children) {
-    attributes = attributes || {};
-    const nativeOptions = !!attributes.is ? { is: attributes.is } : undefined;
-    delete attributes.is;
-
-    const element = nativeCreate(name, nativeOptions);
-
-    // content attributes vs IDL attributes have many cases
-    Object.entries(attributes).forEach(([name,value]) => name.startsWith('on') ? 
-      element[name] = value : element.setAttribute(name,value)
-    );
-
-    children
-      .filter( child => !(child == null || child == undefined))
-      .forEach( child => element.appendChild( 
-        child instanceof Node ? child : document.createTextNode(child)
-      ));
-
-    return element;
-  }
-```
+under the assumption that it's an event listener, and not an intrisic value (innerHTML, outerHTML, textContent, class, value, etc.). Everything else uses setAttribute.
 
 ## spec
 
