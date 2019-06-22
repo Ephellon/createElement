@@ -38,6 +38,14 @@ and you can write something like:
   onload = () => document.body.appendChild(el);
 ```
 
+## special attribute values
+
+You may be tempted to use quotation marks in your code, her eare some rules for using document.furnish:
+
+- `div[att=val]` &rightarrow; `<div att="val"></div>`
+- `div[att="val"]` &rightarrow; `<div att="val"></div>`
+- `div[att='val']` &rightarrow; `<div att="'val'"></div>`
+
 ## content attributes, IDL attributes and event listeners
 
 In the wild, the relationship between content attributes and IDL attributes depends on 
