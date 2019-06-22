@@ -1,10 +1,10 @@
-# createElement
+# furnish
 
-Polyfill built-in createElement to act like an O.P. React.createElement
+Polyfill built-in `createElement` to act like an O.P. `React.createElement`
 
-## Document.createElement
+## document.furnish
 
-Normally just takes one parameter, the tag name.
+Normally just takes one parameter, the element identifier.
 
 In [React](https://reactjs.org/docs/react-api.html#createelement) you might write:
 
@@ -17,22 +17,24 @@ React.createElement('div', null, `Hello ${name}`);
 Including this script 
 
 ```HTML
-<script src=createElement.js></script>
+<script src=furnish.js></script>
 ```
 
 and you can write something like:
 
 ```JavaScript
-  let el = document.createElement('div#id', 
+  let el = document.furnish('div#id.class[attribute=value]', 
     {
       alpha: 12312122,
       beta: 'sdfasfd',
       gamma: {}
     },
-    document.createElement('span.class', { style: 'font-variant: italic;' }, 'hi'),
+
+    document.furnish('span.class', { style: 'font-variant: italic;' }, 'hi'),
     ' wow ',
-    document.createElement('button[onhover=console.log("hovering...")]', { onclick: () => alert(1) }, 'say')
+    document.furnish('button[onhover=console.log("hovering...")]', { onclick: () => alert(1) }, 'say')
   );
+
   onload = () => document.body.appendChild(el);
 ```
 
